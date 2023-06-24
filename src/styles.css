@@ -10,6 +10,15 @@
     color: #F08731;
 }
 
+.h-100vh{
+    height: 100vh;
+    overflow: hidden;
+}
+
+.top-spacing{
+margin-top: 64px;
+}
+
 .bg-orange {
     background-color: #F08731 !important;
 }
@@ -20,8 +29,9 @@
 
 .main-container {
     background-color: #47535D;
+    min-height: 100vh;
     padding: 10px;
-    height: 100vh;
+    height: 100%;
 }
 
 .search-box {
@@ -44,4 +54,8 @@
 .body {
     padding: 0;
     margin: 0;
+}
+
+.overlay{
+    z-index: 25001;
 }
