@@ -1,0 +1,47 @@
+.background {
+    background-color: #47535D;
+}
+
+.active {
+    color: #F08731;
+}
+
+.text-orange {
+    color: #F08731;
+}
+
+.bg-orange {
+    background-color: #F08731 !important;
+}
+
+.icon-lg {
+    font-size: 36px;
+}
+
+.main-container {
+    background-color: #47535D;
+    padding: 10px;
+    height: 100vh;
+}
+
+.search-box {
+    margin: 10px;
+    border-radius: 50px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.icon-sm {
+    font-size: 12px;
+}
+
+.button-rounded {
+    border-radius: 25px;
+}
+
+.body {
+    padding: 0;
+    margin: 0;
+}

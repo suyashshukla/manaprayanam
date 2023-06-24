@@ -1,0 +1,64 @@
+<div class="main-container">
+
+  <div class="input-group bg-white search-box" [formGroup]="searchForm">
+    <div class="input-group-text bg-white"><span class="material-symbols-rounded icon-lg text-orange">menu</span></div>
+    <input type="search" class="form-control" placeholder="Search" formControlName="query">
+    <div class="input-group-text bg-white"><span class="material-symbols-rounded icon-lg text-orange">settings</span>
+    </div>
+  </div>
+
+  <div *ngIf="tripInfo.length==0" class="d-flex justify-content-center text-white h-100 align-items-center">
+    <div class="lead" *ngIf="searchForm.get('query')">No Trips found!</div>
+    <div class="lead" *ngIf="!searchForm.get('query')">Please search for a trip!</div>
+  </div>
+
+  <div *ngIf="tripInfo.length!=0 && !selectedTrip">
+    <div class="card p-3 m-1 cursor-pointer" *ngFor="let trip of tripInfo" (click)="selectTrip(trip.tripId)">
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex justify-content-center align-items-center">
+          <span class="material-symbols-rounded icon-lg me-2 text-orange">train</span>
+          <div>
+            <div>{{trip.routeId}}</div>
+            <div class="text-secondary">{{trip.source}} to {{trip.destination}}</div>
+          </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-center">
+          <span *ngIf="trip.status" class="icon-sm material-symbols-rounded text-success">brightness_1</span>
+          <span *ngIf="!trip.status" class="icon-sm material-symbols-rounded text-danger">brightness_1</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedTrip" class="card p-3">
+    <div class="lead mb-2">Tracking Details</div>
+
+    <div class="d-flex mb-2">
+      <span class="font-weigth-bold me-2">Train Number: </span>
+      <span>{{selectedTrip.routeId}}</span>
+    </div>
+
+    <div class="d-flex mb-2">
+      <span class="font-weigth-bold me-2">Route: </span>
+      <span class="text-secondary">{{selectedTrip.source}} to {{selectedTrip.destination}}</span>
+    </div>
+
+    <div>
+      <div class="font-weigth-bold me-2">Current Status</div>
+      <div class="text-secondary" *ngIf="selectedTrip.nextStopArrivalTime">Crossed {{selectedTrip.previousStop}} at {{selectedTrip.lastStopArrivalTime}} hrs.</div>  
+      <div class="text-secondary" *ngIf="!selectedTrip.nextStopArrivalTime">Reached {{selectedTrip.previousStop}} at {{selectedTrip.lastStopArrivalTime}} hrs.</div>
+      <div class="text-secondary" *ngIf="selectedTrip.nextStopArrivalTime">Reaching {{selectedTrip.nextStop}} by {{selectedTrip.nextStopArrivalTime}} hrs.</div>
+
+      <div class="d-flex justify-content-center">
+        <div class="btn btn-primary bg-orange text-white cursor-pointer text-center mt-3 px-5 button-rounded" (click)="resetSelection()">
+          Reset</div>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between background p-3 text-white fixed-bottom">
+      <span class="material-symbols-rounded icon-lg cursor-pointer active">home</span>
+      <span class="material-symbols-rounded icon-lg cursor-pointer">bookmark</span>
+      <span class="material-symbols-rounded icon-lg cursor-pointer">person</span>
+    </div>
+
+  </div>
