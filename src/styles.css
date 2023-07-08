@@ -77,11 +77,3 @@
 .overlay {
     z-index: 25001;
 }
-
-.material {
-    @import "~@ng-select/ng-select/themes/material.theme";
-}
-
-.default {
-    @import "~@ng-select/ng-select/themes/default.theme";
-}
