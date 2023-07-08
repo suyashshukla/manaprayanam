@@ -15,10 +15,28 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    .center-parent {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      min-height: 100%;
+    }
+
+    .logo-size {
+      height: 48px;
+      width: 48px;
+    }
+  </style>
 </head>
 
 <body>
-  <app-root></app-root>
+  <app-root>
+    <div class="center-parent">
+      <img src="assets/logo.png" class="logo-size">
+    </div>
+  </app-root>
 </body>
 
 </html>
