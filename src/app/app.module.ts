@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppService } from './app.service';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgHttpLoaderModule } from 'ng-http-loader';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormsModule,
     BrowserModule,
     AppRoutingModule,
-    NgSelectModule
+    NgSelectModule,
+    NgHttpLoaderModule.forRoot()
   ],
   providers: [
     AppService

@@ -11,8 +11,6 @@ export class AppComponent implements OnInit {
   title = 'manaprayanam';
 
   searchString!: string;
-  from!: string;
-  to!: string;
 
   isSearchSelection = true;
   stops: any[] = [];
@@ -21,7 +19,9 @@ export class AppComponent implements OnInit {
   selectedTrip!: any;
 
   searchForm = new FormGroup({
-    query: new FormControl()
+    query: new FormControl(),
+    from: new FormControl(),
+    to: new FormControl()
   });
 
   constructor(private appService: AppService) {
@@ -45,8 +45,8 @@ export class AppComponent implements OnInit {
   }
 
   searchForTrips() {
-    if (this.from && this.to) {
-      this.appService.getTripDetailsByFromAndTwo(this.from, this.to).subscribe(response => this.tripInfo = response);
+    if (this.searchForm.value.from && this.searchForm.value.to) {
+      this.appService.getTripDetailsByFromAndTwo(this.searchForm.value.from, this.searchForm.value.to).subscribe(response => this.tripInfo = response);
     }
   }
 
@@ -92,11 +92,16 @@ export class AppComponent implements OnInit {
 
   setSelectedPane(isSearchSelection: boolean) {
     this.isSearchSelection = isSearchSelection;
+    this.resetSelection();
   }
 
   resetSelection() {
     this.selectedTrip = null;
     this.tripInfo = [];
     this.searchForm.reset();
+  }
+
+  get isFormValid() {
+    return this.searchForm.value.to && this.searchForm.value.from;
   }
 }

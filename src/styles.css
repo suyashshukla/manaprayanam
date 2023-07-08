@@ -25,7 +25,7 @@
 }
 
 .top-spacing-large {
-    margin-top: 130px;
+    margin-top: 156px;
 }
 
 .bg-orange {
@@ -36,7 +36,7 @@
     font-size: 36px;
 }
 
-#map{
+#map {
     margin-top: 10px;
     height: 300px;
 }
@@ -52,9 +52,23 @@
     max-width: -webkit-fill-available;
 }
 
+.ng-select.ng-select-single .ng-select-container {
+    height: 50px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.ng-value-container input {
+    padding-top: 9px !important;
+}
+
 .search-box {
-    margin: 10px;
     border-radius: 50px;
+}
+
+.search-box-container{
+    padding:10px;
 }
 
 .cursor-pointer {
