@@ -8,7 +8,7 @@ export class AppService {
     constructor(private httpClient: HttpClient) {
     }
 
-    private apiUrl = 'https://app-azure.manapranayam-cin.azurewebsitets.net/api'
+    private apiUrl = 'https://app-azure-manaprayanam-cin.azurewebsites.net/api'
 
     getTripInfoBySearchString(searchQuery: string): Observable<any[]> {
         return this.httpClient.get<any>(`${this.apiUrl}/trips/search/${searchQuery}`);
