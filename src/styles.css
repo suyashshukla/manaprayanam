@@ -6,17 +6,26 @@
     color: #F08731;
 }
 
+.active-button {
+    color: white;
+    background-color: #F08731;
+}
+
 .text-orange {
     color: #F08731;
 }
 
-.h-100vh{
+.h-100vh {
     height: 100vh;
     overflow: hidden;
 }
 
-.top-spacing{
-margin-top: 64px;
+.top-spacing {
+    margin-top: 64px;
+}
+
+.top-spacing-large {
+    margin-top: 130px;
 }
 
 .bg-orange {
@@ -27,11 +36,20 @@ margin-top: 64px;
     font-size: 36px;
 }
 
+#map{
+    margin-top: 10px;
+    height: 300px;
+}
+
 .main-container {
     background-color: #47535D;
     min-height: 100vh;
     padding: 10px;
     height: 100%;
+}
+
+.max-width {
+    max-width: -webkit-fill-available;
 }
 
 .search-box {
@@ -56,6 +74,14 @@ margin-top: 64px;
     margin: 0;
 }
 
-.overlay{
+.overlay {
     z-index: 25001;
+}
+
+.material {
+    @import "~@ng-select/ng-select/themes/material.theme";
+}
+
+.default {
+    @import "~@ng-select/ng-select/themes/default.theme";
 }
