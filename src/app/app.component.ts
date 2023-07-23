@@ -13,7 +13,10 @@ export class AppComponent implements OnInit {
   searchString!: string;
 
   isSearchSelection = true;
-  stops: any[] = [];
+  stops: Array<any> = [];
+
+  fromStops: Array<any> = [];
+  toStops: Array<any> = [];
 
   tripInfo: any[] = [];
   selectedTrip!: any;
@@ -29,9 +32,18 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.appService.getAllStops().subscribe(response => {
-      this.stops = response;
+      this.stops = this.fromStops = this.toStops = response;
       this.initializeApp();
     });
+  }
+
+  onStopSelected(stop: any, dropdown: 'from' | 'to') {
+    if (dropdown == 'from') {
+      this.toStops = this.stops.filter(s => s.stopId != stop.stopId);
+    }
+    else {
+      this.fromStops = this.stops.filter(s => s.stopId != stop.stopId);
+    }
   }
 
   initializeApp() {
