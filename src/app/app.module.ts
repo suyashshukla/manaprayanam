@@ -8,10 +8,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppService } from './app.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgHttpLoaderModule } from 'ng-http-loader';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    PrivacyPolicyComponent,
     
   ],
   imports: [
