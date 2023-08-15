@@ -26,7 +26,7 @@ export class AppService {
         return this.httpClient.get<any[]>(`${this.apiUrl}/stops/all`);
     }
 
-    getSmartLocation(lat: string, long: string) {
+    getTripsByLocation(lat: string, long: string) {
         return this.httpClient.post<any[]>(`${this.apiUrl}/trips/search/location`,{lat,long});
     }
 

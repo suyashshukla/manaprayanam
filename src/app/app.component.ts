@@ -62,28 +62,21 @@ export class AppComponent implements OnInit {
     }
   }
 
-  smartSearch() {
+  getTripsByLocation() {
     this.setSelectedPane(3);
-    this.getLocation();
-  }
 
-  getLocation() {
     navigator.geolocation.getCurrentPosition(
       (success: any) => {
         var currentLocation = [
           success.coords.latitude,
           success.coords.longitude,
         ];
-        this.getSmartLocation(currentLocation[0] + '', currentLocation[1] + '');
+        this.appService.getTripsByLocation(currentLocation[0] + '', currentLocation[1] + '').subscribe((response) => {
+          this.tripInfo = response
+        });
       },
       () => {}
     );
-  }
-
-  getSmartLocation(lat: string, lng: string) {
-    this.appService.getSmartLocation(lat, lng).subscribe((response) => {
-      this.tripInfo = response
-    });
   }
 
   selectTrip(tripId: any) {
