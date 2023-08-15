@@ -8,8 +8,6 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'manaprayanam';
-
   searchString!: string;
 
   isSearchSelection = true;

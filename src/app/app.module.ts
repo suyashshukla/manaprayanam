@@ -9,11 +9,17 @@ import { AppService } from './app.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PrivacyPolicyComponent,
+    FooterComponent,
+    HeaderComponent,
+    MainComponent,
     
   ],
   imports: [
@@ -28,6 +34,6 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
   providers: [
     AppService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [MainComponent]
 })
 export class AppModule { }
