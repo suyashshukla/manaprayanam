@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
 
   searchString!: string;
 
-  isSearchSelection = true;
+  selectedPane = 1;
   stops: Array<any> = [];
 
   fromStops: Array<any> = [];
@@ -62,6 +62,30 @@ export class AppComponent implements OnInit {
     }
   }
 
+  smartSearch() {
+    this.setSelectedPane(3);
+    this.getLocation();
+  }
+
+  getLocation() {
+    navigator.geolocation.getCurrentPosition(
+      (success: any) => {
+        var currentLocation = [
+          success.coords.latitude,
+          success.coords.longitude,
+        ];
+        this.getSmartLocation(currentLocation[0] + '', currentLocation[1] + '');
+      },
+      () => {}
+    );
+  }
+
+  getSmartLocation(lat: string, lng: string) {
+    this.appService.getSmartLocation(lat, lng).subscribe((response) => {
+      this.tripInfo = response
+    });
+  }
+
   selectTrip(tripId: any) {
     this.appService.getTripDetails(tripId).subscribe(response => {
       this.selectedTrip = response;
@@ -102,8 +126,8 @@ export class AppComponent implements OnInit {
     });
   }
 
-  setSelectedPane(isSearchSelection: boolean) {
-    this.isSearchSelection = isSearchSelection;
+  setSelectedPane(selectedPane: number) {
+    this.selectedPane = selectedPane;
     this.resetSelection();
   }
 
