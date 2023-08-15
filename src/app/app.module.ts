@@ -9,12 +9,14 @@ import { AppService } from './app.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { initializeApp, provideFirebaseApp, getApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
     AppComponent,
     PrivacyPolicyComponent,
-    
+
   ],
   imports: [
     HttpClientModule,
@@ -23,7 +25,8 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
     BrowserModule,
     AppRoutingModule,
     NgSelectModule,
-    NgHttpLoaderModule.forRoot()
+    NgHttpLoaderModule.forRoot(),
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
   ],
   providers: [
     AppService
