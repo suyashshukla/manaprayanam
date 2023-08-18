@@ -1,7 +1,6 @@
 <ng-http-loader></ng-http-loader>
 <div class="main-container">
-
-  <div class="background search-box-container fixed-top overlay max-width" *ngIf="isSearchSelection">
+  <div *ngIf="selectedPane===1" class="background search-box-container fixed-top overlay max-width">
     <div class="input-group" [formGroup]="searchForm">
       <div class="input-group-text bg-white">
         <span class="material-symbols-rounded icon-lg text-orange">menu</span>
@@ -13,16 +12,26 @@
     </div>
   </div>
 
-  <div *ngIf="!isSearchSelection" [formGroup]="searchForm" class="background fixed-top p-2">
-    <ng-select class="mb-2" [clearable]="true" (change)="onStopSelected($event, 'from')" [items]="fromStops" bindLabel="stopName" bindValue="stopId" formControlName="from" placeholder="From">
+  <div *ngIf="selectedPane===2" [formGroup]="searchForm" class="background fixed-top p-2">
+    <ng-select class="mb-2" [clearable]="true" (change)="onStopSelected($event, 'from')" [items]="fromStops"
+      bindLabel="stopName" bindValue="stopId" formControlName="from" placeholder="From">
     </ng-select>
 
-    <ng-select class="mb-2" [clearable]="true" (change)="onStopSelected($event, 'to')" [items]="toStops" bindLabel="stopName" bindValue="stopId" formControlName="to" placeholder="To">
+    <ng-select class="mb-2" [clearable]="true" (change)="onStopSelected($event, 'to')" [items]="toStops"
+      bindLabel="stopName" bindValue="stopId" formControlName="to" placeholder="To">
     </ng-select>
 
-    <button class="btn btn-primary bg-orange text-white cursor-pointer text-center px-5 button-rounded" (click)="searchForTrips()" [disabled]="!isFormValid">
+    <button class="btn btn-primary bg-orange text-white cursor-pointer text-center px-5 button-rounded"
+      (click)="searchForTrips()" [disabled]="!isFormValid">
       Search
     </button>
+  </div>
+
+  <div *ngIf="selectedPane===3" class="background fixed-top pt-3 text-center">
+    <h3 class="text-orange d-flex align-items-center justify-content-center">
+      <div class="card p-1 me-2 d-flex align-items-center justify-content-center"> <span class="text-orange material-symbols-rounded ">location_searching</span></div>
+      Smart Search
+    </h3>
   </div>
 
   <div *ngIf="tripInfo.length==0" class="d-flex justify-content-center text-white h-100vh align-items-center">
@@ -30,7 +39,9 @@
     <div class="lead" *ngIf="!searchForm.get('query')">Please search for a trip!</div>
   </div>
 
-  <div *ngIf="tripInfo.length!=0 && !selectedTrip" [ngClass]="[isSearchSelection ? 'top-spacing' : 'top-spacing-large']">
+
+  <div *ngIf="tripInfo.length!=0 && !selectedTrip"
+    [ngClass]="[selectedPane == 1 || selectedPane == 3 ? 'top-spacing' : 'top-spacing-large']">
     <div class="card p-3 m-1 cursor-pointer" *ngFor="let trip of tripInfo" (click)="selectTrip(trip.tripId)">
       <div class="d-flex align-items-center justify-content-between">
         <div class="d-flex justify-content-center align-items-center">
@@ -48,7 +59,8 @@
     </div>
   </div>
 
-  <div *ngIf="selectedTrip" class="card p-3" [ngClass]="[isSearchSelection ? 'top-spacing' : 'top-spacing-large']">
+
+  <div *ngIf="selectedTrip" class="card p-3" [ngClass]="[(selectedPane==1  || selectedPane == 3)? 'top-spacing' : 'top-spacing-large']">
     <div class="lead mb-2">Tracking Details</div>
 
     <div class="d-flex mb-2">
@@ -74,7 +86,8 @@
       </div>
 
       <div class="d-flex justify-content-center">
-        <div class="btn btn-primary bg-orange text-white cursor-pointer text-center mt-3 px-5 button-rounded" (click)="resetSelection()">
+        <div class="btn btn-primary bg-orange text-white cursor-pointer text-center mt-3 px-5 button-rounded"
+          (click)="resetSelection(selectedPane === 3)">
           Reset
         </div>
       </div>
@@ -83,11 +96,19 @@
     <div id="map"></div>
   </div>
 
+
+
+
   <div class="d-flex align-items-center justify-content-between background text-white fixed-bottom overlay">
-    <span class="material-symbols-rounded icon-lg cursor-pointer d-flex justify-content-center w-100 border border-white"
-          (click)="setSelectedPane(true)" [ngClass]="{'active-button':isSearchSelection}">search</span>
-    <span class="material-symbols-rounded icon-lg cursor-pointer d-flex justify-content-center w-100 border border-white"
-          (click)="setSelectedPane(false)" [ngClass]="{'active-button':!isSearchSelection}">route</span>
+    <span
+      class="material-symbols-rounded icon-lg cursor-pointer d-flex justify-content-center w-100 border border-white"
+      (click)="setSelectedPane(1)" [ngClass]="{'active-button':selectedPane===1}">search</span>
+    <span
+      class="material-symbols-rounded icon-lg cursor-pointer d-flex justify-content-center w-100 border border-white"
+      (click)="setSelectedPane(2)" [ngClass]="{'active-button':selectedPane===2}">route</span>
+    <span
+      class="material-symbols-rounded icon-lg cursor-pointer d-flex justify-content-center w-100 border border-white"
+      (click)="getTripsByLocation()" [ngClass]="{'active-button':selectedPane==3}">mystery</span>
   </div>
 
 </div>
