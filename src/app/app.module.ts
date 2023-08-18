@@ -12,6 +12,8 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
+import { initializeApp, provideFirebaseApp, getApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,6 @@ import { MainComponent } from './main/main.component';
     FooterComponent,
     HeaderComponent,
     MainComponent,
-    
   ],
   imports: [
     HttpClientModule,
@@ -29,7 +30,8 @@ import { MainComponent } from './main/main.component';
     BrowserModule,
     AppRoutingModule,
     NgSelectModule,
-    NgHttpLoaderModule.forRoot()
+    NgHttpLoaderModule.forRoot(),
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
   ],
   providers: [
     AppService

@@ -10,7 +10,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class AppComponent implements OnInit {
   searchString!: string;
 
-  isSearchSelection = true;
+  selectedPane = 1;
   stops: Array<any> = [];
 
   fromStops: Array<any> = [];
@@ -60,6 +60,19 @@ export class AppComponent implements OnInit {
     }
   }
 
+  getTripsByLocation() {
+    this.setSelectedPane(3);
+
+    navigator.geolocation.getCurrentPosition(
+      (success: any) => {
+        this.appService.getTripsByLocation(success.coords.latitude, success.coords.longitude).subscribe((response) => {
+          this.tripInfo = response
+        });
+      },
+      () => { }
+    );
+  }
+
   selectTrip(tripId: any) {
     this.appService.getTripDetails(tripId).subscribe(response => {
       this.selectedTrip = response;
@@ -100,15 +113,18 @@ export class AppComponent implements OnInit {
     });
   }
 
-  setSelectedPane(isSearchSelection: boolean) {
-    this.isSearchSelection = isSearchSelection;
+  setSelectedPane(selectedPane: number) {
+    this.selectedPane = selectedPane;
     this.resetSelection();
   }
 
-  resetSelection() {
+  resetSelection(isForceFetch = false) {
     this.selectedTrip = null;
     this.tripInfo = [];
     this.searchForm.reset();
+    if (isForceFetch) {
+      this.getTripsByLocation();
+    }
   }
 
   get isFormValid() {
