@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
-import { BottomNavigationComponent } from './footer/bottom-navigation.component';
+import { BottomNavigationComponent } from './bottom-navigation/bottom-navigation.component';
 import { TripSearchComponent } from './trip-search/trip-search.component';
 import { MainComponent } from './main/main.component';
 import { environment } from '../environments/environment';
