@@ -1,73 +1,47 @@
+<ng-http-loader></ng-http-loader>
 <div class="main-container">
 
-<!-- Header part -->
-  <app-header
-    *ngIf="isNavigationItemType(navigationItemType.Search)"
-  ></app-header>
+  <!-- Header part -->
+  <app-trip-search *ngIf="isNavigationItemType(navigationItemType.Search)" (isSearchPerformed)="searchTripsByQuery($event)"></app-trip-search>
 
-<!-- Body part -->
-  <div
-    *ngIf="isNavigationItemType(navigationItemType.SourceDestination)"
-    [formGroup]="searchForm"
-    class="background fixed-top p-2"
-  >
-    <ng-select
-      class="mb-2"
-      [clearable]="true"
-      (change)="onStopSelected($event, 'from')"
-      [items]="fromStops"
-      bindLabel="stopName"
-      bindValue="stopId"
-      formControlName="from"
-      placeholder="From"
-    >
+  <!-- Body part -->
+  <div *ngIf="isNavigationItemType(navigationItemType.SourceDestination)" [formGroup]="searchForm"
+    class="background fixed-top p-2">
+    <ng-select class="mb-2" [clearable]="true" (change)="onStopSelected($event, 'from')" [items]="fromStops"
+      bindLabel="stopName" bindValue="stopId" formControlName="from" placeholder="From">
     </ng-select>
 
-    <ng-select
-      class="mb-2"
-      [clearable]="true"
-      (change)="onStopSelected($event, 'to')"
-      [items]="toStops"
-      bindLabel="stopName"
-      bindValue="stopId"
-      formControlName="to"
-      placeholder="To"
-    >
+    <ng-select class="mb-2" [clearable]="true" (change)="onStopSelected($event, 'to')" [items]="toStops"
+      bindLabel="stopName" bindValue="stopId" formControlName="to" placeholder="To">
     </ng-select>
 
-    <button
-      class="btn btn-primary bg-orange text-white cursor-pointer text-center px-5 button-rounded"
-      (click)="searchForTrips()"
-      [disabled]="!isFormValid"
-    >
+    <button class="btn btn-primary bg-orange text-white cursor-pointer text-center px-5 button-rounded"
+      (click)="searchForTrips()" [disabled]="!isFormValid">
       Search
     </button>
   </div>
 
-  <div
-    *ngIf="tripInfo.length == 0"
-    class="d-flex justify-content-center text-white h-100vh align-items-center"
-  >
+  <div *ngIf="isNavigationItemType(navigationItemType.SmartSearch)" class="background fixed-top pt-3 text-center">
+    <h3 class="text-orange d-flex align-items-center justify-content-center">
+      <div class="card p-1 me-2 d-flex align-items-center justify-content-center"> <span
+          class="text-orange material-symbols-rounded ">location_searching</span></div>
+      Smart Search
+    </h3>
+  </div>
+
+  <div *ngIf="tripInfo.length == 0" class="d-flex justify-content-center text-white h-100vh align-items-center">
     <div class="lead" *ngIf="searchForm.get('query')">No Trips found!</div>
     <div class="lead" *ngIf="!searchForm.get('query')">
       Please search for a trip!
     </div>
   </div>
 
-  <div
-    *ngIf="tripInfo.length != 0 && !selectedTrip"
-    [ngClass]="[isSearchSelection ? 'top-spacing' : 'top-spacing-large']"
-  >
-    <div
-      class="card p-3 m-1 cursor-pointer"
-      *ngFor="let trip of tripInfo"
-      (click)="selectTrip(trip.tripId)"
-    >
+  <div *ngIf="tripInfo.length != 0 && !selectedTrip"
+    [ngClass]="[!isTopSpacingRequired ? 'top-spacing' : 'top-spacing-large']">
+    <div class="card p-3 m-1 cursor-pointer" *ngFor="let trip of tripInfo" (click)="selectTrip(trip.tripId)">
       <div class="d-flex align-items-center justify-content-between">
         <div class="d-flex justify-content-center align-items-center">
-          <span class="material-symbols-rounded icon-lg me-2 text-orange"
-            >train</span
-          >
+          <span class="material-symbols-rounded icon-lg me-2 text-orange">train</span>
           <div>
             <div>{{ trip.routeId }}</div>
             <div class="text-secondary">
@@ -76,26 +50,14 @@
           </div>
         </div>
         <div class="d-flex align-items-center justify-content-center">
-          <span
-            *ngIf="trip.status"
-            class="icon-sm material-symbols-rounded text-success"
-            >brightness_1</span
-          >
-          <span
-            *ngIf="!trip.status"
-            class="icon-sm material-symbols-rounded text-danger"
-            >brightness_1</span
-          >
+          <span *ngIf="trip.status" class="icon-sm material-symbols-rounded text-success">brightness_1</span>
+          <span *ngIf="!trip.status" class="icon-sm material-symbols-rounded text-danger">brightness_1</span>
         </div>
       </div>
     </div>
   </div>
 
-  <div
-    *ngIf="selectedTrip"
-    class="card p-3"
-    [ngClass]="[isSearchSelection ? 'top-spacing' : 'top-spacing-large']"
-  >
+  <div *ngIf="selectedTrip" class="card p-3" [ngClass]="[!isTopSpacingRequired ? 'top-spacing' : 'top-spacing-large']">
     <div class="lead mb-2">Tracking Details</div>
 
     <div class="d-flex mb-2">
@@ -105,9 +67,7 @@
 
     <div class="d-flex mb-2">
       <span class="font-weigth-bold me-2">Route: </span>
-      <span class="text-secondary"
-        >{{ selectedTrip.source }} to {{ selectedTrip.destination }}</span
-      >
+      <span class="text-secondary">{{ selectedTrip.source }} to {{ selectedTrip.destination }}</span>
     </div>
 
     <div>
@@ -126,10 +86,8 @@
       </div>
 
       <div class="d-flex justify-content-center">
-        <div
-          class="btn btn-primary bg-orange text-white cursor-pointer text-center mt-3 px-5 button-rounded"
-          (click)="resetSelection()"
-        >
+        <div class="btn btn-primary bg-orange text-white cursor-pointer text-center mt-3 px-5 button-rounded"
+          (click)="resetSelection(isNavigationItemType(navigationItemType.SmartSearch))">
           Reset
         </div>
       </div>
@@ -139,5 +97,5 @@
   </div>
 
   <!-- Footer part -->
-  <app-footer (itemSelected)="setSelectedItem($event)"></app-footer>
+  <app-bottom-navigation (itemSelected)="setSelectedItem($event)"></app-bottom-navigation>
 </div>

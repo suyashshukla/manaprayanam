@@ -1,27 +1,34 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgHttpLoaderModule } from 'ng-http-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppService } from './app.service';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { NgHttpLoaderModule } from 'ng-http-loader';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
-import { FooterComponent } from './footer/footer.component';
-import { HeaderComponent } from './header/header.component';
+import { BottomNavigationComponent } from './footer/bottom-navigation.component';
+import { TripSearchComponent } from './trip-search/trip-search.component';
 import { MainComponent } from './main/main.component';
-import { initializeApp, provideFirebaseApp, getApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
+import { SmartSearchComponent } from './smart-search/smart-search.component';
+import { TripDetailComponent } from './trip-detail/trip-detail.component';
+import { TripListComponent } from './trip-list/trip-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PrivacyPolicyComponent,
-    FooterComponent,
-    HeaderComponent,
+    BottomNavigationComponent,
+    TripSearchComponent,
     MainComponent,
+    SmartSearchComponent,
+    TripDetailComponent,
+    TripListComponent,
   ],
   imports: [
     HttpClientModule,

@@ -1,0 +1,26 @@
+<div *ngIf="tripInfo.length == 0" class="d-flex justify-content-center text-white h-100vh align-items-center">
+    <div class="lead" *ngIf="queryString">No Trips found!</div>
+    <div class="lead" *ngIf="!queryString">
+      Please search for a trip!
+    </div>
+  </div>
+
+  <div *ngIf="tripInfo.length != 0 && isVisible">
+    <div class="card p-3 m-1 cursor-pointer" *ngFor="let trip of tripInfo" (click)="selectTrip(trip.tripId)">
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex justify-content-center align-items-center">
+          <span class="material-symbols-rounded icon-lg me-2 text-orange">train</span>
+          <div>
+            <div>{{ trip.routeId }}</div>
+            <div class="text-secondary">
+              {{ trip.source }} to {{ trip.destination }}
+            </div>
+          </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-center">
+          <span *ngIf="trip.status" class="icon-sm material-symbols-rounded text-success">brightness_1</span>
+          <span *ngIf="!trip.status" class="icon-sm material-symbols-rounded text-danger">brightness_1</span>
+        </div>
+      </div>
+    </div>
+  </div>
