@@ -5,15 +5,15 @@ import { FormControl, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'manaprayanam';
-
   searchString!: string;
 
-  isSearchSelection = true;
-  stops: any[] = [];
+  selectedPane = 1;
+  stops: Array<any> = [];
+
+  fromStops: Array<any> = [];
+  toStops: Array<any> = [];
 
   tripInfo: any[] = [];
   selectedTrip!: any;
@@ -29,9 +29,18 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.appService.getAllStops().subscribe(response => {
-      this.stops = response;
+      this.stops = this.fromStops = this.toStops = response;
       this.initializeApp();
     });
+  }
+
+  onStopSelected(stop: any, dropdown: 'from' | 'to') {
+    if (dropdown == 'from') {
+      this.toStops = this.stops.filter(s => s.stopId != stop.stopId);
+    }
+    else {
+      this.fromStops = this.stops.filter(s => s.stopId != stop.stopId);
+    }
   }
 
   initializeApp() {
@@ -48,6 +57,19 @@ export class AppComponent implements OnInit {
     if (this.searchForm.value.from && this.searchForm.value.to) {
       this.appService.getTripDetailsByFromAndTwo(this.searchForm.value.from, this.searchForm.value.to).subscribe(response => this.tripInfo = response);
     }
+  }
+
+  getTripsByLocation() {
+    this.setSelectedPane(3);
+
+    navigator.geolocation.getCurrentPosition(
+      (success: any) => {
+        this.appService.getTripsByLocation(success.coords.latitude, success.coords.longitude).subscribe((response) => {
+          this.tripInfo = response
+        });
+      },
+      () => { }
+    );
   }
 
   selectTrip(tripId: any) {
@@ -90,15 +112,18 @@ export class AppComponent implements OnInit {
     });
   }
 
-  setSelectedPane(isSearchSelection: boolean) {
-    this.isSearchSelection = isSearchSelection;
+  setSelectedPane(selectedPane: number) {
+    this.selectedPane = selectedPane;
     this.resetSelection();
   }
 
-  resetSelection() {
+  resetSelection(isForceFetch = false) {
     this.selectedTrip = null;
     this.tripInfo = [];
     this.searchForm.reset();
+    if (isForceFetch) {
+      this.getTripsByLocation();
+    }
   }
 
   get isFormValid() {
