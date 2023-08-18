@@ -67,15 +67,11 @@ export class AppComponent implements OnInit {
 
     navigator.geolocation.getCurrentPosition(
       (success: any) => {
-        var currentLocation = [
-          success.coords.latitude,
-          success.coords.longitude,
-        ];
-        this.appService.getTripsByLocation(currentLocation[0] + '', currentLocation[1] + '').subscribe((response) => {
+        this.appService.getTripsByLocation(success.coords.latitude, success.coords.longitude).subscribe((response) => {
           this.tripInfo = response
         });
       },
-      () => {}
+      () => { }
     );
   }
 
@@ -124,10 +120,13 @@ export class AppComponent implements OnInit {
     this.resetSelection();
   }
 
-  resetSelection() {
+  resetSelection(isForceFetch = false) {
     this.selectedTrip = null;
     this.tripInfo = [];
     this.searchForm.reset();
+    if (isForceFetch) {
+      this.getTripsByLocation();
+    }
   }
 
   get isFormValid() {
